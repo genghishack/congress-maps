@@ -4,8 +4,6 @@ var fs = require('fs'),
 
 var stateCodes = JSON.parse(fs.readFileSync('states.json', 'utf8'));
 
-var currentLegislators = JSON.parse(fs.readFileSync('data/legislators-current.json'));
-
 // load the congressional district data
 
 var geojson = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
@@ -15,7 +13,7 @@ var geojson = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 // congressional district --- filter these out
 
 var filtered = geojson.features.filter(function (d) {
-	return d.properties['CD115FP'] !== 'ZZ' ? true : false;
+	return d.properties['CD116FP'] !== 'ZZ' ? true : false;
 });
 var districts = {'type': 'FeatureCollection', 'features': filtered};
 
@@ -51,39 +49,22 @@ colored.features.map(function (d) {
 	var pt = turf.point([parseFloat(d.properties['INTPTLON']), parseFloat(d.properties['INTPTLAT'])]);
 
 	// Get the district number in two-digit form ("00" (for at-large
-	// districts), "01", "02", ...). The Census data's CD115FP field
+	// districts), "01", "02", ...). The Census data's CD116FP field
 	// holds it in this format. Except for the island territories
 	// which have "98", but are just at-large and should be "00".
-	var number = d.properties['CD115FP'];
+	var number = d.properties['CD116FP'];
 	if (number == "98")
 		number = "00";
 
 	// map the state FIPS code in the STATEFP attribute to the USPS
-	// state abbreviation and the state's name.  Map the current
-	// legislators to their states/districts.
+	// state abbreviation and the state's name.
 	var state;
 	var state_name;
-	var senate = [];
-	var house;
 
 	stateCodes.map(function (n, i) {
 		if (parseInt(d.properties['STATEFP']) === parseInt(n['FIPS'])) {
 			state = n['USPS'];
 			state_name = n['Name'];
-		}
-	});
-
-	currentLegislators.map(function(n, i) {
-		var latestTerm = n.terms[n.terms.length - 1];
-
-		if (state == latestTerm.state) {
-			if (latestTerm.type == 'sen') {
-				senate.push(n);
-			} else if (latestTerm.type == 'rep') {
-				if (parseInt(d.properties['CD115FP']) === parseInt(latestTerm.district)) {
-					house = n;
-				}
-			}
 		}
 	});
 
