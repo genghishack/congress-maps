@@ -57,7 +57,7 @@ export MAPBOX_WRITE_SCOPE_ACCESS_TOKEN=<your mapbox write scope access token>
 mkdir data
 
 # download Census boundaries data, unzip the data, and convert it to GeoJSON
-wget -P data ftp://ftp2.census.gov/geo/tiger/TIGER2017/CD/tl_2018_us_cd116.zip
+wget -P data ftp://ftp2.census.gov/geo/tiger/TIGER2018/CD/tl_2018_us_cd116.zip
 unzip data/tl_2018_us_cd116.zip -d ./data/
 ogr2ogr -f GeoJSON -t_srs crs:84 data/congressional_districts.geojson data/tl_2018_us_cd116.shp
 
