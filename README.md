@@ -65,7 +65,7 @@ ogr2ogr -f GeoJSON -t_srs crs:84 data/congressional_districts.geojson data/tl_20
 node process.js data/census-2018/congressional_districts.geojson
 
 # create Mapbox vector tiles from data
-tippecanoe -o data/census-2018/cd-116-2018.mbtiles -f -z 12 -Z 0 -B 0 -pS -pp -l districts -n "US Congressional Districts" data/census-2018/map.geojson
+tippecanoe -o data/census-2018/cd-116-2018.mbtiles -f -z 12 -Z 0 -B 0 -pS -pp -l districts -n "US Congressional Districts" --generate-ids data/census-2018/map.geojson
 
 # upload map data to Mapbox.com
 node upload.js data/cd-116-2018.mbtiles

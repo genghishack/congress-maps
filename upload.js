@@ -6,8 +6,8 @@ var districtsFile = process.argv[2],
 	user = process.env.MAPBOX_USERNAME,
 	accessToken = process.env.MAPBOX_WRITE_SCOPE_ACCESS_TOKEN;
 
-var tileset_id = user + ".cd-115-2017"; // max 32 characters (including "-labels" added below), only one period
-var tileset_name = "US_Congressional_Districts_115th_2017"; // max 64 characters (including "_Labels" added below) no spaces
+var tileset_id = user + ".cd-116-2018"; // max 32 characters (including "-labels" added below), only one period
+var tileset_name = "US_Congressional_Districts_116th_2018"; // max 64 characters (including "_Labels" added below) no spaces
 
 var client = new MapboxClient(accessToken);
 
