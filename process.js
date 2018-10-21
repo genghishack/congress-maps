@@ -73,8 +73,6 @@ colored.features.map(function (d) {
 	d.properties.state = state;
 	d.properties.title_short = state + ' ' + (number == "00" ? "At Large" : parseInt(number));
 	d.properties.title_long = state_name + '’s ' + (number == "00" ? "At Large" : ordinal(parseInt(number))) + ' Congressional District';
-	d.properties.senate = senate;
-	d.properties.house = house;
 
 	// add metadata to the label
 	pt.properties = JSON.parse(JSON.stringify(d.properties)); // copy hack to avoid mutability issues
@@ -110,9 +108,9 @@ for (var s in stateBboxes) {
 // write out data for the next steps
 console.log('writing data...');
 
-fs.writeFileSync('./data/map.geojson', JSON.stringify(mapData));
+fs.writeFileSync('./data/census-2018/map.geojson', JSON.stringify(mapData));
 
-fs.writeFileSync('./example/states.js', 'var states = ' + JSON.stringify(stateCodes, null, 2));
+fs.writeFileSync('./data/census-2018/states.js', 'var states = ' + JSON.stringify(stateCodes, null, 2));
 
 var bboxes = {};
 for (var b in districtBboxes) {
@@ -123,6 +121,6 @@ for (var b in stateBboxes) {
 	bboxes[b] = stateBboxes[b]
 }
 ;
-fs.writeFileSync('./example/bboxes.js', 'var bboxes = ' + JSON.stringify(bboxes, null, 2));
+fs.writeFileSync('./data/census-2018/bboxes.js', 'var bboxes = ' + JSON.stringify(bboxes, null, 2));
 
 console.log('finished processing, ready for tiling');
